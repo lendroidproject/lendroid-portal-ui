@@ -14,8 +14,8 @@ It is a react-app and requires knowledge of ReactJS.
 The styling is done using Twitter Bootstrap 4.0 with the help of reactstrap library components. Please see
 below for guides and help on how to use reactstrap.
 
-* (Reactstrap Layout Guide)[https://reactstrap.github.io/components/layout/]
-* (Reactstrap Component Guide)[https://reactstrap.github.io/components/alerts/]
+* [Reactstrap Layout Guide](https://reactstrap.github.io/components/layout/)
+* [Reactstrap Component Guide](https://reactstrap.github.io/components/alerts/)
 
 ### Routing
 Adding a Router
