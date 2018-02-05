@@ -1,4 +1,4 @@
-## Running:
+## Running
 * Install Dependencies
   - `> npm install`
 * Run server
