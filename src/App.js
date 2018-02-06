@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
   Container,
   Row,
   Col,
-  Jumbotron,
-  Button
+  ListGroup,
+  ListGroupItem 
 } from 'reactstrap';
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
+
+import DepositFundsPage from './components/DepositFundsPage';
+import CommitFundsPage from './components/CommitFundsPage';
+import CreateOfferPage from './components/CreateOfferPage';
 
 class App extends Component {
   constructor(props) {
@@ -23,45 +26,37 @@ class App extends Component {
       isOpen: false
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+
   render() {
     return (
-      <div>
+      <Router>
         <Container>
           <Row>
             <Col lg={{ size: 10, offset: 1}}>
               <Row style={{ backgroundColor: "white" }}>
-                <Col lg={3} style={{ backgroundColor: "#343a40" }}>
-                  <Navbar color="transparent" toggleable style={{  color: "white !important"}} >
-                    <NavbarToggler right onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                      <Nav vertical={true} navbar>
-                        <NavItem>
-                          <NavLink href="">Deposit Funds</NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink href="">Commit Funds</NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink href="">Create Offer</NavLink>
-                        </NavItem>
-                      </Nav>
-                    </Collapse>
-                  </Navbar>
+                <Col lg={3} style={{ backgroundColor: "#343a40", padding: '0' }}>
+                  <ListGroup>
+                    <ListGroupItem tag="a" href="/deposit_funds">Deposit Funds</ListGroupItem>
+                    <ListGroupItem tag="a" href="/commit_funds">Commit Funds</ListGroupItem>
+                    <ListGroupItem tag="a" href="/create_offer">Create Order</ListGroupItem>
+                  </ListGroup>    
                 </Col>
-                <Col lg={9}>
-                  <div style={{ minHeight: "560px" }}></div>
+                <Col lg={9} style={{ minHeight: "560px", paddingTop: "30px" }}>
+                  <Route exact path="/deposit_funds" component={DepositFundsPage}/>
+                  <Route exact path="/commit_funds" component={CommitFundsPage}/>
+                  <Route exact path="/create_offer" component={CreateOfferPage}/>
                 </Col>
               </Row>
             </Col>
           </Row>
-      </Container>
-
-      </div>
+        </Container>
+      </Router>
     );
   }
 }
