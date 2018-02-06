@@ -31,40 +31,36 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar color="dark" dark toggleable>
-          <NavbarToggler right onClick={this.toggle} />
-          <NavbarBrand href="/">xx</NavbarBrand>
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">Github</NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
-        <Jumbotron>
-          <Container>
-            <Row>
-              <Col>
-                <h1>Welcome to React</h1>
-                <p>
-                  <Button
-                    tag="a"
-                    color="success"
-                    size="large"
-                    href="http://reactstrap.github.io"
-                    target="_blank"
-                  >
-                    View Reactstrap Docs
-                  </Button>
-                </p>
-              </Col>
-            </Row>
-          </Container>
-        </Jumbotron>
+        <Container>
+          <Row>
+            <Col lg={{ size: 10, offset: 1}}>
+              <Row style={{ backgroundColor: "white" }}>
+                <Col lg={3} style={{ backgroundColor: "#343a40" }}>
+                  <Navbar color="transparent" toggleable style={{  color: "white !important"}} >
+                    <NavbarToggler right onClick={this.toggle} />
+                    <Collapse isOpen={this.state.isOpen} navbar>
+                      <Nav vertical={true} navbar>
+                        <NavItem>
+                          <NavLink href="">Deposit Funds</NavLink>
+                        </NavItem>
+                        <NavItem>
+                          <NavLink href="">Commit Funds</NavLink>
+                        </NavItem>
+                        <NavItem>
+                          <NavLink href="">Create Offer</NavLink>
+                        </NavItem>
+                      </Nav>
+                    </Collapse>
+                  </Navbar>
+                </Col>
+                <Col lg={9}>
+                  <div style={{ minHeight: "560px" }}></div>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+      </Container>
+
       </div>
     );
   }
