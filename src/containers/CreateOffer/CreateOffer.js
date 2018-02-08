@@ -5,7 +5,7 @@ const MARKETS = {
   'OMG_ETH': { pair: 'OMG/ETH', loanToken: 'OMG', cost: '100 szabo' },
   'ZRX_ETH': { pair: 'ZRX/ETH', loanToken: 'ZRX', cost: '150 szabo' },
 }
-class CreateOfferPage extends Component {
+class CreateOffer extends Component {
   constructor(props) {
     super(props);
 
@@ -81,4 +81,4 @@ class CreateOfferPage extends Component {
   }
 }
 
-export default CreateOfferPage;
+export default CreateOffer;

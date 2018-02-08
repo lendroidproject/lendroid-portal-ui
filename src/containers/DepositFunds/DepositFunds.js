@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class DepositFundsPage extends Component {
+class DepositFunds extends Component {
   render() {
     return (
       <div>
@@ -10,4 +10,4 @@ class DepositFundsPage extends Component {
   }
 }
 
-export default DepositFundsPage;
+export default DepositFunds;

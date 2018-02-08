@@ -1,11 +1,9 @@
 import React, { PureComponent } from 'react';
-import {
-  Layout,
-  Menu,
-  Icon,
-  Dropdown,
-  Avatar
-} from 'antd';
+import { Link, Route } from 'react-router-dom';
+import { Layout, Menu, Icon, Dropdown, Avatar } from 'antd';
+import CommitFunds from '../CommitFunds/CommitFunds';
+import CreateOffer from '../CreateOffer/CreateOffer';
+import DepositFunds from '../DepositFunds/DepositFunds';
 import './MainLayout.css';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -71,22 +69,32 @@ class MainLayout extends PureComponent {
               defaultSelectedKeys={['1']}
             >
               <Menu.Item key="1">
-                <Icon type="user" />
-                <span>Commit Funds</span>
+                <Link to="/create-offer">
+                  <Icon type="plus-square-o" />
+                  <span>Create Offer</span>
+                </Link>
               </Menu.Item>
+              
               <Menu.Item key="2">
-                <Icon type="video-camera" />
-                <span>Create Offer</span>
+                <Link to="/commit-funds">
+                  <Icon type="upload" />
+                  <span>Commit Funds</span>
+                </Link>
               </Menu.Item>
+              
               <Menu.Item key="3">
-                <Icon type="upload" />
-                <span>Deposit Funds</span>
+                <Link to="/deposit-funds">
+                  <Icon type="select" />
+                  <span>Deposit Funds</span>
+                </Link>
               </Menu.Item>
             </Menu>
           </Sider>
 
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
-            Contents
+            <Route path="/commit-funds" component={CommitFunds}/>
+            <Route path="/create-offer" component={CreateOffer}/>
+            <Route path="/deposit-funds" component={DepositFunds}/>
           </Content>
         </Layout>
       </Layout>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CommitFundsPage extends Component {
+class CommitFunds extends Component {
   render() {
     return (
       <div>Commit Funds</div>
@@ -8,4 +8,4 @@ class CommitFundsPage extends Component {
   }
 }
 
-export default CommitFundsPage;
+export default CommitFunds;
