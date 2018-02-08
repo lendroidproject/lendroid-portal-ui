@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import { Col, Button, Form, FormGroup, Label, Input, FormText, Row } from 'reactstrap';
+import { default as Web3 } from 'web3';
+import axios from 'axios';
 
 const MARKETS = {
-    'OMG_ETH': { pair: 'OMG/ETH', loanToken: 'OMG', cost: '100 szabo' },
-    'ZRX_ETH': { pair: 'ZRX/ETH', loanToken: 'ZRX', cost: '150 szabo' },
+    'OMG_ETH': { pair: 'OMG/ETH', loanToken: 'OMG' },
+    'ZRX_ETH': { pair: 'ZRX/ETH', loanToken: 'ZRX' },
 }
 class CreateOfferPage extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            tokenPair: MARKETS['OMG_ETH'].pair,
-            quantity: 0,
-            loanToken: MARKETS['OMG_ETH'].loanToken,
-            cost: MARKETS['OMG_ETH'].cost
-        };
+            lenderAddress: "0x2fd5d34162fa812e7d71bd5305954f4733e9271c",
+            tokenPair: "OMG/ETH",
+            loanQuantity: 0,
+            loanToken: "OMG",
+            costAmount: 100,
+            costToken: "ETH"
+        }
     
         this.handleQuantityChange = this.handleQuantityChange.bind(this);
         this.handleMarketChange = this.handleMarketChange.bind(this);
@@ -25,20 +28,58 @@ class CreateOfferPage extends Component {
         const state = this.state;
         const market = MARKETS[event.target.value];
         state['tokenPair'] = market.tokenPair;
-        state['loanToken'] = market.loanToken;
-        state['cost'] = market.cost;
         this.setState(state);
       }
    
     handleQuantityChange = (event) => {
         const state = this.state;
-        state['quantity'] = event.target.value;
+        state['loanQuantity'] = event.target.value;
         this.setState(state);
+    }
+
+    handleLoanTokenChange = (event) => {
+        const state = this.state;
+        state['loanToken'] = event.target.value;
+        this.setState(state);   
+    }
+
+    handleCostAmountChange = (event) => {
+        const state = this.state;
+        state['costAmount'] = event.target.value;
+        this.setState(state);    
+    }
+
+    handleCostTokenChange = (event) => {
+        const state = this.state;
+        state['costToken'] = event.target.value;
+        this.setState(state);    
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        const { tokenPair, quantity, loanToken, cost } = this.state;
+        const { lenderAddress, tokenPair, loanQuantity, loanToken, costAmount, costToken } = this.state;
+        const payload =  {
+            lenderAddress: lenderAddress,
+            tokenPair: tokenPair,
+            loanQuantity: loanQuantity,
+            loanToken: loanToken,
+            costAmount: costAmount,
+            costToken: costToken
+        };
+        const web3 = new Web3(window.web3.currentProvider);
+
+        web3.eth.getAccounts().then((accounts) => {
+            return web3.eth.personal.sign(JSON.stringify(payload), accounts[0])
+            .then((result) => {
+                payload['ecSignature'] = result;
+                return axios.post('http://localhost:8080/offers', payload).then((result) => {
+                    console.log(result);
+                });
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     render() {
@@ -56,20 +97,28 @@ class CreateOfferPage extends Component {
                 <FormGroup row>
                 <Label for="quantity" sm={2}>Quantity</Label>
                 <Col sm={10}>
-                    <Input value={this.state.quantity} type="number" name="quantity" id="quantity" placeholder="1000" onChange={this.handleQuantityChange} />
+                    <Input value={this.state.quantity} type="number" name="quantity" id="quantity" 
+                           placeholder="1000" onChange={this.handleQuantityChange} />
                 </Col>
                 </FormGroup>
                 <FormGroup row>
                 <Label for="loanToken" sm={2}>Loan Token</Label>
                 <Col sm={10}>
-                    <Input value={this.state.loanToken} type="text" name="loanToken" id="loan-token" placeholder="OMG"/>
+                    <Input value={this.state.loanToken} type="text" name="loanToken" id="loan-token" 
+                           placeholder="OMG" onChange={this.handleLoanTokenChange} />
                 </Col>
                 </FormGroup>
                 <FormGroup row>
-                <Label for="cost" sm={2}>Cost</Label>
-                <Col sm={10}>
-                    <Input value={this.state.cost} type="text" name="cost" id="cost" placeholder="100 szabo"/>
+                <Label for="Cost" sm={2}>Loan Cost</Label>
+                <Col sm={5}>
+                    <Input value={this.state.costAmount} type="text" name="costAmount" id="costAmount"
+                           placeholder="100" onChange={this.handleCostAmountChange}/>
                 </Col>
+                <Col sm={5}>
+                    <Input value={this.state.costToken} type="text" name="costToken" id="costToken"
+                           placeholder="100" onChange={this.handleCostTokenChange}/>
+                </Col>
+
                 </FormGroup>
                 <FormGroup row>
                     <Col className="text-center">
