@@ -62,13 +62,13 @@ class CreateOffer extends Component {
         <FormGroup row>
           <Label for="loanToken" sm={2}>Loan Token</Label>
           <Col sm={10}>
-            <Input value={this.state.loanToken} type="text" name="loanToken" id="loan-token" placeholder="OMG" />
+            <Input value={this.state.loanToken} type="text" name="loanToken" id="loan-token" placeholder="OMG" onChange={() => {}} />
           </Col>
         </FormGroup>
         <FormGroup row>
           <Label for="cost" sm={2}>Cost</Label>
           <Col sm={10}>
-            <Input value={this.state.cost} type="text" name="cost" id="cost" placeholder="100 szabo" />
+            <Input value={this.state.cost} type="text" name="cost" id="cost" placeholder="100 szabo" onChange={() => {}} />
           </Col>
         </FormGroup>
         <FormGroup row>
