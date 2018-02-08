@@ -7,7 +7,7 @@ const MARKETS = {
     'OMG_ETH': { pair: 'OMG/ETH', loanToken: 'OMG' },
     'ZRX_ETH': { pair: 'ZRX/ETH', loanToken: 'ZRX' },
 }
-class ViewOffersPage extends Component {
+class ViewOffers extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -59,4 +59,4 @@ class ViewOffersPage extends Component {
     }
 }
 
-export default ViewOffersPage;
+export default ViewOffers;

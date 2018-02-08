@@ -7,7 +7,7 @@ const MARKETS = {
     'OMG_ETH': { pair: 'OMG/ETH', loanToken: 'OMG' },
     'ZRX_ETH': { pair: 'ZRX/ETH', loanToken: 'ZRX' },
 }
-class CreateOfferPage extends Component {
+class CreateOffer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,7 +18,7 @@ class CreateOfferPage extends Component {
             costAmount: 10,
             costToken: "ETH"
         }
-    
+
         this.handleQuantityChange = this.handleQuantityChange.bind(this);
         this.handleMarketChange = this.handleMarketChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,7 +30,7 @@ class CreateOfferPage extends Component {
         state['tokenPair'] = market.tokenPair;
         this.setState(state);
       }
-   
+
     handleQuantityChange = (event) => {
         const state = this.state;
         state['loanQuantity'] = event.target.value;
@@ -40,19 +40,19 @@ class CreateOfferPage extends Component {
     handleLoanTokenChange = (event) => {
         const state = this.state;
         state['loanToken'] = event.target.value;
-        this.setState(state);   
+        this.setState(state);
     }
 
     handleCostAmountChange = (event) => {
         const state = this.state;
         state['costAmount'] = event.target.value;
-        this.setState(state);    
+        this.setState(state);
     }
 
     handleCostTokenChange = (event) => {
         const state = this.state;
         state['costToken'] = event.target.value;
-        this.setState(state);    
+        this.setState(state);
     }
 
     handleSubmit(event) {
@@ -97,14 +97,14 @@ class CreateOfferPage extends Component {
                 <FormGroup row>
                 <Label for="quantity" sm={2}>Quantity</Label>
                 <Col sm={10}>
-                    <Input value={this.state.loanQuantity} type="number" name="quantity" id="quantity" 
+                    <Input value={this.state.loanQuantity} type="number" name="quantity" id="quantity"
                            placeholder="1000" onChange={this.handleQuantityChange} />
                 </Col>
                 </FormGroup>
                 <FormGroup row>
                 <Label for="loanToken" sm={2}>Loan Token</Label>
                 <Col sm={10}>
-                    <Input value={this.state.loanToken} type="text" name="loanToken" id="loan-token" 
+                    <Input value={this.state.loanToken} type="text" name="loanToken" id="loan-token"
                            placeholder="OMG" onChange={this.handleLoanTokenChange} />
                 </Col>
                 </FormGroup>
@@ -130,4 +130,4 @@ class CreateOfferPage extends Component {
     }
 }
 
-export default CreateOfferPage;
+export default CreateOffer;
