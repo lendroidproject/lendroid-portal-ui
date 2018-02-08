@@ -3,6 +3,8 @@
   - `> npm install`
 * Run server
   - `> npm start`
+* Run Backend Server
+  - [Backend server](https://github.com/norestlabs/lendroid-portal-server)
 
 ## Development
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
