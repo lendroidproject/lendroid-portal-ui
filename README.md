@@ -13,7 +13,7 @@ It is a react-app and requires knowledge of ReactJS.
 ### Design
 The styling is done using Twitter Bootstrap 4.0 with the help of reactstrap library components. Please see
 below for guides and help on how to use reactstrap.
-
+* [Icons (Font Awesome)](https://fontawesome.com/icons?d=gallery&m=free)
 * [Reactstrap Layout Guide](https://reactstrap.github.io/components/layout/)
 * [Reactstrap Component Guide](https://reactstrap.github.io/components/alerts/)
 
