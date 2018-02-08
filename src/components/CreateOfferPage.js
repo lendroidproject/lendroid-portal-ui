@@ -11,11 +11,11 @@ class CreateOfferPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lenderAddress: "0x2fd5d34162fa812e7d71bd5305954f4733e9271c",
+            lenderAddress: "0x4fe5d34162fa812e7d71bd5305954f4733e92712",
             tokenPair: "OMG/ETH",
-            loanQuantity: 0,
+            loanQuantity: 100,
             loanToken: "OMG",
-            costAmount: 100,
+            costAmount: 10,
             costToken: "ETH"
         }
     
@@ -97,7 +97,7 @@ class CreateOfferPage extends Component {
                 <FormGroup row>
                 <Label for="quantity" sm={2}>Quantity</Label>
                 <Col sm={10}>
-                    <Input value={this.state.quantity} type="number" name="quantity" id="quantity" 
+                    <Input value={this.state.loanQuantity} type="number" name="quantity" id="quantity" 
                            placeholder="1000" onChange={this.handleQuantityChange} />
                 </Col>
                 </FormGroup>
