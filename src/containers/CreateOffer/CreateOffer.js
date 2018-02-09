@@ -120,7 +120,7 @@ class CreateOffer extends Component {
                 <FormGroup row>
                 <Label for="Cost" sm={2}>Loan Cost</Label>
                 <Col sm={5}>
-                    <Input value={this.state.costAmount} type="text" name="costAmount" id="costAmount"
+                    <Input value={this.state.costAmount} type="number" name="costAmount" id="costAmount"
                            placeholder="100" onChange={this.handleCostAmountChange}/>
                 </Col>
                 <Col sm={5}>
