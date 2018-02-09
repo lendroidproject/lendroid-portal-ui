@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Link, Route, Switch, Redirect } from 'react-router-dom';
+import { NavLink, Route, Switch, Redirect } from 'react-router-dom';
 import { Layout, Menu, Icon, Dropdown, Avatar } from 'antd';
 import ViewOffers from '../ViewOffers/ViewOffers';
 import CommitFunds from '../CommitFunds/CommitFunds';
@@ -75,39 +75,45 @@ class MainLayout extends PureComponent {
             <Menu
               theme="dark"
               mode="inline"
-              defaultSelectedKeys={['1']}
             >
               <Menu.Item key="1">
-                <Link to="/view-offers">
+                <NavLink to="/view-offers" activeClassName="active">
                   <Icon type="bars" />
                   <span>View Offers</span>
-                </Link>
+                </NavLink>
               </Menu.Item>
 
               <Menu.Item key="2">
-                <Link to="/create-offer">
+                <NavLink to="/create-offer" activeClassName="active">
                   <Icon type="plus-square-o" />
                   <span>Create Offer</span>
-                </Link>
+                </NavLink>
               </Menu.Item>
 
               <Menu.Item key="3">
-                <Link to="/commit-funds">
+                <NavLink to="/commit-funds" activeClassName="active">
                   <Icon type="upload" />
                   <span>Commit Funds</span>
-                </Link>
+                </NavLink>
               </Menu.Item>
 
               <Menu.Item key="4">
-                <Link to="/deposit-funds">
+                <NavLink to="/deposit-funds" activeClassName="active">
                   <Icon type="wallet" />
                   <span>Deposit Funds</span>
-                </Link>
+                </NavLink>
               </Menu.Item>
             </Menu>
           </Sider>
 
-          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+          <Content
+            style={{
+              margin: '24px 16px',
+              padding: 24,
+              background: '#fff',
+              minHeight: 280
+            }}
+          >
             <Switch>
               <Route exact path="/view-offers" component={ViewOffers}/>
               <Route exact path="/commit-funds" component={CommitFunds}/>

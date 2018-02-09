@@ -49,7 +49,7 @@ class CommitFunds extends Component {
           <Form onSubmit={this.handleSubmitCommit} className="commit-form">
             <Form.Item
               {...formItemLayout}
-              label="Loan Token"
+              label="Commit Token"
             >
               {
                 getFieldDecorator('loanToken', {
@@ -77,7 +77,7 @@ class CommitFunds extends Component {
             </Form.Item>
             <Form.Item
               {...formItemLayout}
-              label="Loan Amount"
+              label="Commit Amount"
             >
               {
                 getFieldDecorator('quantity', {
