@@ -48,10 +48,18 @@ class MainLayout extends PureComponent {
                   <Icon type="user"/>
                 </Avatar>
                 <div className="wallet-info">
-                  <span className="web3-provider">Meta Mask</span><br/>
-                  <span className="web3-address">0x0980248324...1321</span>
+                  <span className="web3-provider">
+                    Meta Mask
+                  </span>
+                  <br/>
+                  <span className="web3-address">
+                    0x0980248324...1321
+                  </span>
                 </div>
-                <Icon type="down" className="menu-icon"/>
+                <Icon 
+                  type="down"
+                  className="menu-icon"
+                />
               </div>
             </Dropdown>
           </div>

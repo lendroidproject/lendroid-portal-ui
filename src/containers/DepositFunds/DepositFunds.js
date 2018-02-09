@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class DepositFunds extends Component {
   render() {
     return (
-      <div>
-        Deposit Funds
-    </div>
+      <div className="deposit-funds">
+        
+      </div>
     );
   }
 }
