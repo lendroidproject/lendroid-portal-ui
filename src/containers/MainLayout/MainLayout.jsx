@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 import { Layout, Menu, Icon, Dropdown, Avatar } from 'antd';
 import ViewOffers from '../ViewOffers/ViewOffers';
 import CommitFunds from '../CommitFunds/CommitFunds';
@@ -100,6 +100,7 @@ class MainLayout extends PureComponent {
           </Sider>
 
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+            <Redirect from="/" to="/view-offers"/>
             <Route exact path="/view-offers" component={ViewOffers}/>
             <Route exact path="/commit-funds" component={CommitFunds}/>
             <Route exact path="/create-offer" component={CreateOffer}/>
