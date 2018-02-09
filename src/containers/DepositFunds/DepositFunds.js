@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Row, Col, Table} from 'reactstrap'
 import { Form, Select, InputNumber, Button } from 'antd';
 import './DepositFunds.css';
-const FormItem = Form.Item;
-const Option = Select.Option;
 
 const availableTokens = [
   {
@@ -16,11 +14,18 @@ const availableTokens = [
   }
 ];
 
-const columns = [{
-  title: 'Token Name',
-}]
-
 class DepositFunds extends Component {
+  
+  handleSubmitDeposit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('------should integreate with api---------');
+        console.log(values);
+      }
+    });
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
 
@@ -42,7 +47,7 @@ class DepositFunds extends Component {
         <Col md="12" className="loan-submit-form">
           <h4>Submit your loan</h4>
           <Form onSubmit={this.handleSubmitDeposit} className="deposit-form">
-            <FormItem
+            <Form.Item
               {...formItemLayout}
               label="Loan Token"
             >
@@ -58,19 +63,19 @@ class DepositFunds extends Component {
                   >
                     {
                       availableTokens.map((token) => (
-                        <Option 
+                        <Select.Option 
                           key={token.tokenName}
                           value={token.tokenName}
                         >
                           {token.tokenName}
-                        </Option>
+                        </Select.Option>
                       ))
                     }
                   </Select>
                 )
               }
-            </FormItem>
-            <FormItem
+            </Form.Item>
+            <Form.Item
               {...formItemLayout}
               label="Loan Amount"
             >
@@ -90,12 +95,12 @@ class DepositFunds extends Component {
                   />
                 )
               }
-            </FormItem>
-            <FormItem 
+            </Form.Item>
+            <Form.Item 
               wrapperCol={{span: 20, offset: 4}}
             >
               <Button type="primary" htmlType="submit">Submit</Button>
-            </FormItem>
+            </Form.Item>
           </Form>
         </Col>
 
