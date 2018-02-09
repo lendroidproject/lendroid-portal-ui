@@ -6,12 +6,8 @@ const initialState = Immutable({
     offers: []
 })
 
-export default function offers(state = initialState, action={}) {
+export default function markets(state = initialState, action={}) {
     switch(action.type) {
-    case types.GET_OFFERS:
-        return state.merge({
-            offers: action.data
-        })
     default:
         return state
     }

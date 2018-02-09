@@ -6,7 +6,7 @@ const initialState = Immutable({
     orders: []
 })
 
-export default function offers(state = initialState, action={}) {
+export default function orders(state = initialState, action={}) {
     switch(action.type) {
     case types.GET_ORDERS:
         return state.merge({

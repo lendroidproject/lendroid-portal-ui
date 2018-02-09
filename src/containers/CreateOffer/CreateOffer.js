@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Col, Button, Form, FormGroup, Label, Input, FormText, Row } from 'reactstrap';
 import { default as Web3 } from 'web3';
 import axios from 'axios';
+import { connect } from 'react-redux'
 
 class CreateOffer extends Component {
     constructor(props) {
@@ -139,4 +140,10 @@ class CreateOffer extends Component {
     }
 }
 
-export default CreateOffer;
+function mapStateToProps(state) {
+    return {
+        markets: state.markets.markets,
+        tokens: state.tokens.tokens
+    }
+}
+export default connect(mapStateToProps, null)(CreateOffer);
