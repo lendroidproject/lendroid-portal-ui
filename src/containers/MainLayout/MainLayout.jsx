@@ -71,8 +71,8 @@ class MainLayout extends PureComponent {
             >
               <Menu.Item key="1">
                 <Link to="/view-offers">
-                  <Icon type="plus-square-o" />
-                  <span>Offers</span>
+                  <Icon type="bars" />
+                  <span>View Offers</span>
                 </Link>
               </Menu.Item>
 
@@ -92,7 +92,7 @@ class MainLayout extends PureComponent {
 
               <Menu.Item key="4">
                 <Link to="/deposit-funds">
-                  <Icon type="select" />
+                  <Icon type="wallet" />
                   <span>Deposit Funds</span>
                 </Link>
               </Menu.Item>
