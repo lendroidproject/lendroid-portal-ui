@@ -1,0 +1,7 @@
+.commit-funds .ant-form-item-label {
+  text-align: left;
+}
+
+.commit-funds .available-tokens-table table{
+  border: 1px solid #aaa;
+}

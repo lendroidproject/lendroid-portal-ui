@@ -1,0 +1,7 @@
+.deposit-funds .ant-form-item-label {
+  text-align: left;
+}
+
+.deposit-funds .available-tokens-table table{
+  border: 1px solid #aaa;
+}

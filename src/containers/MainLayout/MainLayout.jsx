@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { NavLink, Route, Switch, Redirect } from 'react-router-dom';
 import { Layout, Menu, Icon, Dropdown, Avatar } from 'antd';
 import ViewOffers from '../ViewOffers/ViewOffers';
 import CommitFunds from '../CommitFunds/CommitFunds';
@@ -47,10 +47,18 @@ class MainLayout extends PureComponent {
                   <Icon type="user"/>
                 </Avatar>
                 <div className="wallet-info">
-                  <span className="web3-provider">Meta Mask</span><br/>
-                  <span className="web3-address">0x0980248324...1321</span>
+                  <span className="web3-provider">
+                    Meta Mask
+                  </span>
+                  <br/>
+                  <span className="web3-address">
+                    0x0980248324...1321
+                  </span>
                 </div>
-                <Icon type="down" className="menu-icon"/>
+                <Icon 
+                  type="down"
+                  className="menu-icon"
+                />
               </div>
             </Dropdown>
           </div>
@@ -66,43 +74,52 @@ class MainLayout extends PureComponent {
             <Menu
               theme="dark"
               mode="inline"
-              defaultSelectedKeys={['1']}
             >
               <Menu.Item key="1">
-                <Link to="/view-offers">
-                  <Icon type="plus-square-o" />
-                  <span>Offers</span>
-                </Link>
+                <NavLink to="/view-offers" activeClassName="active">
+                  <Icon type="bars" />
+                  <span>View Offers</span>
+                </NavLink>
               </Menu.Item>
 
               <Menu.Item key="2">
-                <Link to="/create-offer">
+                <NavLink to="/create-offer" activeClassName="active">
                   <Icon type="plus-square-o" />
                   <span>Create Offer</span>
-                </Link>
+                </NavLink>
               </Menu.Item>
 
               <Menu.Item key="3">
-                <Link to="/commit-funds">
+                <NavLink to="/commit-funds" activeClassName="active">
                   <Icon type="upload" />
                   <span>Commit Funds</span>
-                </Link>
+                </NavLink>
               </Menu.Item>
 
               <Menu.Item key="4">
-                <Link to="/deposit-funds">
-                  <Icon type="select" />
+                <NavLink to="/deposit-funds" activeClassName="active">
+                  <Icon type="wallet" />
                   <span>Deposit Funds</span>
-                </Link>
+                </NavLink>
               </Menu.Item>
             </Menu>
           </Sider>
 
-          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
-            <Route exact path="/view-offers" component={ViewOffers}/>
-            <Route exact path="/commit-funds" component={CommitFunds}/>
-            <Route exact path="/create-offer" render={ (routeProps)=> <CreateOffer {...routeProps} {...this.props} /> } />
-            <Route exact path="/deposit-funds" component={DepositFunds}/>
+          <Content
+            style={{
+              margin: '24px 16px',
+              padding: 24,
+              background: '#fff',
+              minHeight: 280
+            }}
+          >
+            <Switch>
+              <Route exact path="/view-offers" component={ViewOffers}/>
+              <Route exact path="/commit-funds" component={CommitFunds}/>
+              <Route exact path="/create-offer" component={CreateOffer}/>
+              <Route exact path="/deposit-funds" component={DepositFunds}/>
+              <Redirect to="/view-offers"/>
+            </Switch>
           </Content>
         </Layout>
       </Layout>
