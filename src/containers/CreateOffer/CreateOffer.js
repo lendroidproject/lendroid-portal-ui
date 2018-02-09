@@ -3,20 +3,20 @@ import { Col, Button, Form, FormGroup, Label, Input, FormText, Row } from 'react
 import { default as Web3 } from 'web3';
 import axios from 'axios';
 
-const MARKETS = {
-    'OMG_ETH': { pair: 'OMG/ETH', loanToken: 'OMG' },
-    'ZRX_ETH': { pair: 'ZRX/ETH', loanToken: 'ZRX' },
-}
 class CreateOffer extends Component {
     constructor(props) {
         super(props);
+        const defaultMarket = this.props.markets[0];
+        this.tokens = this.props.tokens;
         this.state = {
-            lenderAddress: "0x4fe5d34162fa812e7d71bd5305954f4733e92712",
-            tokenPair: "OMG/ETH",
+            tokenPair: defaultMarket.pair,
+            quoteTokenAddress: defaultMarket.quoteTokenAddress,
+            baseTokenAddress: defaultMarket.baseTokenAddress,
             loanQuantity: 100,
-            loanToken: "OMG",
+            loanToken: this.tokens[defaultMarket.baseTokenAddress],
+            loanTokenAddress: defaultMarket.baseTokenAddress,
             costAmount: 10,
-            costToken: "ETH"
+            costToken: this.tokens[defaultMarket.quoteTokenAddress]
         }
 
         this.handleQuantityChange = this.handleQuantityChange.bind(this);
@@ -26,8 +26,10 @@ class CreateOffer extends Component {
 
     handleMarketChange = (event) => {
         const state = this.state;
-        const market = MARKETS[event.target.value];
+        const market = this.props.markets[parseInt(event.target.value)];
         state['tokenPair'] = market.tokenPair;
+        state['loanToken'] = this.tokens[market.baseTokenAddress];
+        state['costToken'] = this.tokens[market.quoteTokenAddress];
         this.setState(state);
       }
 
@@ -57,12 +59,17 @@ class CreateOffer extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const { lenderAddress, tokenPair, loanQuantity, loanToken, costAmount, costToken } = this.state;
+        const lenderAddress = this.props.lenderAddress;
+        const { tokenPair, quoteTokenAddress, baseTokenAddress, loanQuantity,
+                loanToken, loanTokenAddress, costAmount, costToken } = this.state;
         const payload =  {
             lenderAddress: lenderAddress,
+            quoteTokenAddress: quoteTokenAddress,
+            baseTokenAddress, baseTokenAddress,
             tokenPair: tokenPair,
             loanQuantity: loanQuantity,
             loanToken: loanToken,
+            loanTokenAddress: loanTokenAddress,
             costAmount: costAmount,
             costToken: costToken
         };
@@ -83,14 +90,16 @@ class CreateOffer extends Component {
     }
 
     render() {
+
         return (
             <Form className="offer-form" onSubmit={this.handleSubmit}>
                 <FormGroup row>
                 <Label for="market" sm={2}>Market</Label>
                 <Col sm={10}>
                     <Input type="select" name="market" id="market" onChange={this.handleMarketChange}>
-                        <option value="OMG_ETH">OMG/ETH</option>
-                        <option value="ZRX_ETH">ZRX/ETH</option>
+                        {this.props.markets.map(function(market, index){
+                            return <option key={index} value={index}>{market.pair}</option>;
+                        })}
                     </Input>
                 </Col>
                 </FormGroup>

@@ -27,7 +27,6 @@ class MainLayout extends PureComponent {
 
   constructor(props) {
     super(props);
-
     this.state = {
       collapsed: false
     }
@@ -102,7 +101,7 @@ class MainLayout extends PureComponent {
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
             <Route exact path="/view-offers" component={ViewOffers}/>
             <Route exact path="/commit-funds" component={CommitFunds}/>
-            <Route exact path="/create-offer" component={CreateOffer}/>
+            <Route exact path="/create-offer" render={ (routeProps)=> <CreateOffer {...routeProps} {...this.props} /> } />
             <Route exact path="/deposit-funds" component={DepositFunds}/>
           </Content>
         </Layout>

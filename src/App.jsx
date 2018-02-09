@@ -4,7 +4,7 @@ import MainLayout from './containers/MainLayout/MainLayout';
 
 const App = (props) => (
   <Router>
-    <MainLayout/>
+    <MainLayout {...props} />
   </Router>
 );
 
