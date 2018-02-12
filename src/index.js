@@ -8,9 +8,21 @@ import registerServiceWorker from './registerServiceWorker';
 
 const LENDER_ADDRESS = "0x23614cad46228c932caef635ca5279"
 const TOKENS = {
-  '0x73de023fc01ab': 'OMG',
-  '0x023e1abfc073d': 'ETH',
-  '0x048e1a2d7803a': 'ZRX',
+  '0x73de023fc01ab': {
+    'symbol': 'OMG',
+    'name': 'Omisego',
+    'decimals': 18
+  },
+  '0x023e1abfc073d': {
+    'symbol': 'ETH',
+    'name': 'Ethereum',
+    'decimals': 18
+  },
+  '0x048e1a2d7803a': {
+    'symbol': 'ZRX',
+    'name': '0x Protocol Token',
+    'decimals': 18
+  },
 }
 const MARKETS = [
     {
