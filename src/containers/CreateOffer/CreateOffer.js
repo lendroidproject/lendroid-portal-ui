@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
-import {
-Col,
-Button,
-Form,
-FormGroup,
-Label,
-InputGroup,
-InputGroupAddon,
-InputGroupText,
-Input,
-FormText,
-Row
-} from 'reactstrap';
-import {BigNumber} from 'bignumber.js';
+import { Col, Button, Form, FormGroup, Label, Input, FormText, Row } from 'reactstrap';
 import { default as Web3 } from 'web3';
 import axios from 'axios';
+import {BigNumber} from 'bignumber.js';
 import { connect } from 'react-redux'
 
 class CreateOffer extends Component {
@@ -194,4 +182,5 @@ function mapStateToProps(state) {
         tokens: state.tokens.tokens
     }
 }
+
 export default connect(mapStateToProps, null)(CreateOffer);
