@@ -5,6 +5,9 @@ import 'antd/dist/antd.min.css';
 
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import * as lendroid from 'lendroid'
+
+const len = new lendroid.Lendroid({ deployedConstants: { walletAddress: '0x464707b3e20c984856eb21cbb3bf29c14d74a3f1' } })
 
 const LENDER_ADDRESS = "0x23614cad46228c932caef635ca5279"
 const TOKENS = {
@@ -40,8 +43,9 @@ const MARKETS = [
       quoteTokenAddress: '0x2956356cd2a2bf3202f771f50d3d14a367b48070'
     }
 ]
+
 ReactDOM.render(
-  <App markets={MARKETS} tokens={TOKENS} lenderAddress={LENDER_ADDRESS}/> ,
-  document.getElementById('root')
+    <App lendroid={len}/>,
+    document.getElementById('root')
 );
 registerServiceWorker();

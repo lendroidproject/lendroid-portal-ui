@@ -114,11 +114,19 @@ class MainLayout extends PureComponent {
             }}
           >
             <Switch>
+<<<<<<< HEAD
               <Route exact path="/create-offer" render={ (routeProps)=> <CreateOffer {...routeProps} {...this.props}/> } />
               <Route exact path="/view-offers"  render={ (routeProps)=> <ViewOffers {...routeProps} {...this.props}/> } />
               <Route exact path="/commit-funds" render={ (routeProps)=> <CommitFunds {...routeProps} {...this.props}/> } />
               <Route exact path="/deposit-funds" render={ (routeProps)=> <DepositFunds {...routeProps} {...this.props}/> } />
               <Redirect to="/create-offer"/>
+=======
+              <Route exact path="/view-offers" render={ (routeProps)=> <ViewOffers {...routeProps} {...this.props}/> } />
+              <Route exact path="/commit-funds" render={ (routeProps)=> <CommitFunds {...routeProps} {...this.props}/> } />
+              <Route exact path="/create-offer" render={ (routeProps)=> <CreateOffer {...routeProps} {...this.props}/> } />
+              <Route exact path="/deposit-funds" render={ (routeProps)=> <DepositFunds {...routeProps} {...this.props}/> } />
+              <Redirect to="/view-offers"/>
+>>>>>>> master
             </Switch>
           </Content>
         </Layout>
