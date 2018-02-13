@@ -8,6 +8,10 @@ class DepositFunds extends Component {
     constructor(props) {
         super(props)
         this.lendroid = this.props.lendroid
+        this.state = {
+            ethBalance: 0,
+            omgBalance: 0
+        }
     }
 
     handleSubmitDeposit = (e) => {
@@ -18,6 +22,23 @@ class DepositFunds extends Component {
             }
         });
     }
+
+    componentWillMount() {
+        const state = this.state
+
+        this.lendroid.getWithdrawableBalance(this.lendroid.getTokenAddress('ETH'))
+            .then(balance => {
+                state.ethBalance = balance
+                this.setState(state)
+            }).catch(console.error)
+
+        this.lendroid.getWithdrawableBalance(this.lendroid.getTokenAddress('OMG'))
+            .then(balance => {
+                state.omgBalance = balance
+                this.setState(state)
+            }).catch(console.error)
+    }
+
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -101,22 +122,20 @@ class DepositFunds extends Component {
                     <Table>
                         <thead>
                         <tr>
-                            <th>No</th>
                             <th>Token Name</th>
                             <th>Amount</th>
                         </tr>
                         </thead>
-                        {/*<tbody>*/}
-                        {/*{*/}
-                        {/*availableTokens.map((token, index) => (*/}
-                        {/*<tr key={index}>*/}
-                        {/*<td>{index}</td>*/}
-                        {/*<td>{token.tokenName}</td>*/}
-                        {/*<td>{token.amount}</td>*/}
-                        {/*</tr>*/}
-                        {/*))*/}
-                        {/*}*/}
-                        {/*</tbody>*/}
+                        <tbody>
+                        <tr key={'ETH'}>
+                            <td>ETH</td>
+                            <td>{this.state.ethBalance}</td>
+                        </tr>
+                        <tr key={'OMG'}>
+                            <td>OMG</td>
+                            <td>{this.state.omgBalance}</td>
+                        </tr>
+                        </tbody>
                     </Table>
                 </Col>
             </Row>

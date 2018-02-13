@@ -8,6 +8,10 @@ class CommitFunds extends Component {
     constructor(props) {
         super(props);
         this.lendroid = this.props.lendroid;
+        this.state = {
+            ethBalance: 0,
+            omgBalance: 0
+        }
     }
 
     handleSubmitCommit = (e) => {
@@ -18,6 +22,22 @@ class CommitFunds extends Component {
                 this.lendroid.commitFunds(values.quantity, values.loanToken)
             }
         });
+    }
+
+    componentWillMount() {
+        const state = this.state
+
+        this.lendroid.getCashBalance(this.lendroid.getTokenAddress('ETH'))
+            .then(balance => {
+                state.ethBalance = balance
+                this.setState(state)
+            }).catch(console.error)
+
+        this.lendroid.getCashBalance(this.lendroid.getTokenAddress('OMG'))
+            .then(balance => {
+                state.omgBalance = balance
+                this.setState(state)
+            }).catch(console.error)
     }
 
     render() {
@@ -36,9 +56,7 @@ class CommitFunds extends Component {
         };
 
         return (
-            <Row
-                className="commit-funds"
-            >
+            <Row className="commit-funds">
                 <Col md="12" className="loan-commit-form">
                     <h4>Commit your loan</h4>
                     <Form onSubmit={this.handleSubmitCommit} className="commit-form">
@@ -107,14 +125,14 @@ class CommitFunds extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {
-                            this.lendroid.getTokenNames().map(token=> (
-                                <tr key={token}>
-                                    <td>{token}</td>
-                                    <td>{token}</td>
-                                </tr>
-                            ))
-                        }
+                        <tr key={'ETH'}>
+                            <td>ETH</td>
+                            <td>{this.state.ethBalance}</td>
+                        </tr>
+                        <tr key={'OMG'}>
+                            <td>OMG</td>
+                            <td>{this.state.omgBalance}</td>
+                        </tr>
                         </tbody>
                     </Table>
                 </Col>
