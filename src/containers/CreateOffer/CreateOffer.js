@@ -93,7 +93,7 @@ class CreateOffer extends Component {
                     <Col sm={10}>
                         <InputGroup>
                             <Input value={loanTokenAmount} type="number" name="quantity" id="quantity"
-                                   placeholder="0" onChange={this.handleLoanTokenAmountChange}/>
+                                   placeholder="0"  step="0.0000001"  onChange={this.handleLoanTokenAmountChange}/>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
                                     <strong>{this.lendroid.getTokenNames()[0]}</strong>
@@ -108,7 +108,7 @@ class CreateOffer extends Component {
                     <Col>
                         <InputGroup>
                             <Input value={loanCostTokenAmount} type="number" name="costAmount" id="costAmount"
-                                   placeholder="0" step="0.01" onChange={this.handleCostAmountChange}/>
+                                   placeholder="0" step="0.0000001" onChange={this.handleCostAmountChange}/>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
                                     <strong>{this.lendroid.getTokenNames()[1]}</strong>
@@ -122,7 +122,7 @@ class CreateOffer extends Component {
                     <Col>
                         <InputGroup>
                             <Input value={totalCostAmount} type="number" name="totalCostAmount" id="totalCostAmount"
-                                   placeholder="0" step="any" disabled/>
+                                   placeholder="0" step="0.0000001" step="any" disabled/>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
                                     <strong>{this.lendroid.getTokenNames()[1]}</strong>
