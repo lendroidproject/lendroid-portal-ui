@@ -29,10 +29,6 @@ class CreateOffer extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    toBigNumber(tokenAmount) {
-        return (new BigNumber(tokenAmount)).times('10e+18').toString(10);
-    }
-
     handleMarketChange = (event) => {
         const state = this.state;
         const market = this.props.markets[event.target.value];
@@ -65,12 +61,10 @@ class CreateOffer extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const {
-            loanTokenAmount, loanTokenSymbol, loanCostTokenSymbol, loanCostTokenAmount, loanInterestTokenAmount
-        } = this.state
+        const { loanTokenAmount, loanTokenSymbol, loanCostTokenSymbol, loanCostTokenAmount, loanInterestTokenAmount } = this.state
 
-        this.lendroid.createLoanOffer(loanTokenSymbol, this.toBigNumber(loanTokenAmount),
-            this.toBigNumber(loanCostTokenAmount), loanCostTokenSymbol, this.toBigNumber(loanInterestTokenAmount))
+        this.lendroid.createLoanOffer(loanTokenSymbol, loanTokenAmount,
+            loanCostTokenAmount, loanCostTokenSymbol, loanInterestTokenAmount)
             .catch(console.error);
     }
 

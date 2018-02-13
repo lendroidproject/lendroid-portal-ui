@@ -8,6 +8,18 @@ class DepositFunds extends Component {
     constructor(props) {
         super(props)
         this.lendroid = this.props.lendroid
+        this.state = {
+            ethBalance: 0,
+            omgBalance: 0,
+            withdrawablEthBalance: 0,
+            withdrawablOmgBalance: 0
+        }
+    }
+
+    handleApproval(e) {
+        e.preventDefault();
+        const target = e.target;
+     //   this.lendroid.getApproval('ETH')
     }
 
     handleSubmitDeposit = (e) => {
@@ -18,6 +30,23 @@ class DepositFunds extends Component {
             }
         });
     }
+
+    componentWillMount() {
+        const state = this.state
+
+        this.lendroid.getWithdrawableBalance(this.lendroid.getTokenAddress('ETH'))
+            .then(balance => {
+                state.withdrawablEthBalance = balance
+                this.setState(state)
+            }).catch(console.error)
+
+        this.lendroid.getWithdrawableBalance(this.lendroid.getTokenAddress('OMG'))
+            .then(balance => {
+                state.withdrawablOmgBalance = balance
+                this.setState(state)
+            }).catch(console.error)
+    }
+
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -34,9 +63,30 @@ class DepositFunds extends Component {
         };
 
         return (
-            <Row
-                className="deposit-funds"
-            >
+            <Row className="deposit-funds">
+                <Col md="12">
+                    <Table>
+                        <thead>
+                        <tr>
+                            <th>Token Name</th>
+                            <th>Amount</th>
+                            <th>Allowance</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr key={'ETH'}>
+                            <td><strong>ETH</strong></td>
+                            <td>{this.state.ethBalance}</td>
+                            <td><Button type="primary" htmlType="submit" onClick={ this.handleApproval }>Approve</Button></td>
+                        </tr>
+                        <tr key={'OMG'}>
+                            <td><strong>OMG</strong></td>
+                            <td>{this.state.omgBalance}</td>
+                            <td><Button type="primary" htmlType="submit" onClick={ this.handleApproval }>Approve</Button></td>
+                        </tr>
+                        </tbody>
+                    </Table>
+                </Col>
                 <Col md="12" className="loan-submit-form">
                     <h4>Submit your loan</h4>
                     <Form onSubmit={this.handleSubmitDeposit} className="deposit-form">
@@ -101,22 +151,20 @@ class DepositFunds extends Component {
                     <Table>
                         <thead>
                         <tr>
-                            <th>No</th>
                             <th>Token Name</th>
                             <th>Amount</th>
                         </tr>
                         </thead>
-                        {/*<tbody>*/}
-                        {/*{*/}
-                        {/*availableTokens.map((token, index) => (*/}
-                        {/*<tr key={index}>*/}
-                        {/*<td>{index}</td>*/}
-                        {/*<td>{token.tokenName}</td>*/}
-                        {/*<td>{token.amount}</td>*/}
-                        {/*</tr>*/}
-                        {/*))*/}
-                        {/*}*/}
-                        {/*</tbody>*/}
+                        <tbody>
+                        <tr key={'ETH'}>
+                            <td><strong>ETH</strong></td>
+                            <td>{this.state.withdrawablEthBalance}</td>
+                        </tr>
+                        <tr key={'OMG'}>
+                            <td><strong>OMG</strong></td>
+                            <td>{this.state.withdrawablOmgBalance}</td>
+                        </tr>
+                        </tbody>
                     </Table>
                 </Col>
             </Row>
