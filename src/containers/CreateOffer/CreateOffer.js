@@ -35,7 +35,7 @@ class CreateOffer extends Component {
         return (new BigNumber(tokenAmount)).times('10e+18').toString(10);
     }
 
-    handleWranglerAddressChange() {
+    handleWranglerAddressChange(event) {
         const state = this.state;
         state['wranglerAddress'] = event.target.value;
         this.setState(state);
@@ -78,8 +78,9 @@ class CreateOffer extends Component {
             wranglerAddress
         } = this.state
 
-        this.lendroid.createLoanOffer(loanTokenSymbol, loanTokenAmount,
-            loanCostTokenAmount, loanCostTokenSymbol, loanInterestTokenAmount)
+        this.lendroid.createLoanOffer(loanTokenSymbol, this.toBigNumber(loanTokenAmount),
+            this.toBigNumber(loanCostTokenAmount), loanCostTokenSymbol, this.toBigNumber(loanInterestTokenAmount),
+            this.wranglerAddress)
             .catch(console.error);
     }
 
