@@ -75,17 +75,17 @@ class MainLayout extends PureComponent {
               theme="dark"
               mode="inline"
             >
-              <Menu.Item key="1">
-                <NavLink to="/view-offers" activeClassName="active">
-                  <Icon type="bars" />
-                  <span>View Offers</span>
-                </NavLink>
-              </Menu.Item>
-
               <Menu.Item key="2">
                 <NavLink to="/create-offer" activeClassName="active">
                   <Icon type="plus-square-o" />
                   <span>Create Offer</span>
+                </NavLink>
+              </Menu.Item>
+
+              <Menu.Item key="1">
+                <NavLink to="/view-offers" activeClassName="active">
+                  <Icon type="bars" />
+                  <span>View Offers</span>
                 </NavLink>
               </Menu.Item>
 
@@ -114,11 +114,11 @@ class MainLayout extends PureComponent {
             }}
           >
             <Switch>
-              <Route exact path="/view-offers" render={ (routeProps)=> <ViewOffers {...routeProps} {...this.props}/> } />
-              <Route exact path="/commit-funds" render={ (routeProps)=> <CommitFunds {...routeProps} {...this.props}/> } />
               <Route exact path="/create-offer" render={ (routeProps)=> <CreateOffer {...routeProps} {...this.props}/> } />
+              <Route exact path="/view-offers"  render={ (routeProps)=> <ViewOffers {...routeProps} {...this.props}/> } />
+              <Route exact path="/commit-funds" render={ (routeProps)=> <CommitFunds {...routeProps} {...this.props}/> } />
               <Route exact path="/deposit-funds" render={ (routeProps)=> <DepositFunds {...routeProps} {...this.props}/> } />
-              <Redirect to="/view-offers"/>
+              <Redirect to="/create-offer"/>
             </Switch>
           </Content>
         </Layout>
