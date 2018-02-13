@@ -61,16 +61,16 @@ class CreateOffer extends Component {
     handleLoanTokenAmountChange = (event) => {
         const state = this.state;
         state['loanTokenAmount'] = parseFloat(event.target.value);
-        state['totalCostAmount'] = state['loanTokenAmount'] * this.state.loanCostTokenAmount;
-        state['loanInterestTokenAmount'] = state['totalCostAmount'] * 0.01;
+        state['totalCostAmount'] = (state['loanTokenAmount'] * this.state.loanCostTokenAmount).toFixed(10);
+        state['loanInterestTokenAmount'] = (state['totalCostAmount'] * 0.01).toFixed(10);
         this.setState(state);
     }
 
     handleCostAmountChange = (event) => {
         const state = this.state;
         state['loanCostTokenAmount'] = parseFloat(event.target.value);
-        state['totalCostAmount'] = state['loanCostTokenAmount'] * this.state.loanTokenAmount;
-        state['loanInterestTokenAmount'] = state['totalCostAmount'] * 0.001;
+        state['totalCostAmount'] = (state['loanCostTokenAmount'] * this.state.loanTokenAmount).toFixed(10);
+        state['loanInterestTokenAmount'] = (state['totalCostAmount'] * 0.001).toFixed(10);
         this.setState(state);
     }
 
@@ -169,7 +169,7 @@ class CreateOffer extends Component {
                     <Col>
                         <InputGroup>
                             <Input value={loanInterestTokenAmount} type="number" name="loandInterestAmount" id="loanInterestAmount"
-                               placeholder="0.01" step="0.01" disabled />
+                               placeholder="0.01" step="0.0000001" disabled />
                             <InputGroupAddon addonType="prepend">
                                  <InputGroupText>
                                      <strong>{this.tokens[loanInterestTokenAddress].symbol}</strong>
