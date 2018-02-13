@@ -1,39 +1,27 @@
 import React, { Component } from 'react';
-import {
-Col,
-Button,
-Form,
-FormGroup,
-Label,
-InputGroup,
-InputGroupAddon,
-InputGroupText,
-Input,
-FormText,
-Row
-} from 'reactstrap';
-import {BigNumber} from 'bignumber.js';
-import { default as Web3 } from 'web3';
-import axios from 'axios';
+import { Col, Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { BigNumber } from 'bignumber.js';
 import { connect } from 'react-redux'
 
 class CreateOffer extends Component {
+
     constructor(props) {
         super(props);
-        const defaultMarket = this.props.markets[0];
         this.tokens = this.props.tokens;
+        this.lendroid = this.props.lendroid;
+
         this.state = {
-            tokenPair: defaultMarket.pair,
-            loanTokenSymbol: defaultMarket.baseTokenSymbol,
-            loanTokenAddress: defaultMarket.baseTokenAddress,
+            tokenPair: 'OMG/ETH',
+            loanTokenSymbol: 'OMG',
+            loanTokenAddress: this.lendroid.getTokenAddress('OMG'),
             loanTokenAmount: 1,
-            loanCostTokenSymbol: defaultMarket.quoteTokenSymbol,
-            loanCostTokenAddress: defaultMarket.quoteTokenAddress,
+            loanCostTokenSymbol: 'ETH',
+            loanCostTokenAddress: this.lendroid.getTokenAddress('ETH'),
             loanCostTokenAmount: 1,
-            loanInterestTokenSymbol: defaultMarket.quoteTokenAddress,
-            loanInterestTokenAddress: defaultMarket.quoteTokenAddress,
+            loanInterestTokenSymbol: 'ETH',
+            loanInterestTokenAddress: this.lendroid.getTokenAddress('ETH'),
             loanInterestTokenAmount: 0,
-            totalCostAmount: 0,
+            totalCostAmount: 0
         }
 
         this.handleQuantityChange = this.handleLoanTokenAmountChange.bind(this);
@@ -41,8 +29,8 @@ class CreateOffer extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    toBigNumber(tokenAmount, tokenAddress) {
-        return (new BigNumber(tokenAmount)).times('10e+' + this.tokens[tokenAddress].decimals).toString(10);
+    toBigNumber(tokenAmount) {
+        return (new BigNumber(tokenAmount)).times('10e+18').toString(10);
     }
 
     handleMarketChange = (event) => {
@@ -56,7 +44,7 @@ class CreateOffer extends Component {
         state['loanInterestTokenSymbol'] = market.loanInterestTokenSymbol;
         state['loanInterestTokenAddress'] = market.quoteTokenAddress;
         this.setState(state);
-      }
+    }
 
     handleLoanTokenAmountChange = (event) => {
         const state = this.state;
@@ -76,76 +64,55 @@ class CreateOffer extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const lenderAddress = this.props.lenderAddress;
-        const { tokenPair, loanTokenAmount, loanTokenAddress, loanCostTokenAddress,
-                loanCostTokenAmount, loanInterestTokenAddress, loanInterestTokenAmount
-              } = this.state;
-        const payload =  {
-            market: tokenPair,
-            lenderAddress: lenderAddress,
-            loanTokenAddress: loanTokenAddress,
-            loanTokenAmount: this.toBigNumber(loanTokenAmount, loanInterestTokenAddress),
-            loanCostTokenAddress: loanCostTokenAddress,
-            loanCostTokenAmount: this.toBigNumber(loanCostTokenAmount, loanInterestTokenAddress),
-            loanInterestTokenAddress: loanInterestTokenAddress,
-            loanInterestTokenAmount: this.toBigNumber(loanInterestTokenAmount, loanInterestTokenAddress)
-        };
 
-        const web3 = new Web3(window.web3.currentProvider);
-        web3.eth.getAccounts().then((accounts) => {
-            return web3.eth.personal.sign(JSON.stringify(payload), accounts[0])
-            .then((result) => {
-                payload['ecSignature'] = result;
-                return axios.post('http://localhost:8080/offers', payload).then((result) => {
-                    console.log(result);
-                });
-            })
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        const {
+            loanTokenAmount, loanTokenSymbol, loanCostTokenSymbol, loanCostTokenAmount, loanInterestTokenAmount
+        } = this.state
+
+        this.lendroid.createLoanOffer(loanTokenSymbol, this.toBigNumber(loanTokenAmount),
+            this.toBigNumber(loanCostTokenAmount), loanCostTokenSymbol, this.toBigNumber(loanInterestTokenAmount))
+            .catch(console.error);
     }
 
     render() {
-        const { tokenPair, loanTokenAmount, loanTokenAddress, loanCostTokenAddress,
-                loanCostTokenAmount, loanInterestTokenAddress, loanInterestTokenAmount,
-                totalCostAmount } = this.state;
+        const { loanTokenAmount, loanCostTokenAmount, loanInterestTokenAmount, totalCostAmount } = this.state;
         return (
             <Form className="offer-form" onSubmit={this.handleSubmit}>
                 <FormGroup row>
-                <Label for="market" sm={2}>Market</Label>
-                <Col sm={10}>
-                    <Input type="select" name="market" id="market" onChange={this.handleMarketChange}>
-                        {this.props.markets.map(function(market, index){
-                            return <option key={index} value={index}>{market.pair}</option>;
-                        })}
-                    </Input>
-                </Col>
+                    <Label for="market" sm={2}>Market</Label>
+                    <Col sm={10}>
+                        <Input type="select" name="market" id="market" onChange={this.handleMarketChange}>
+                            {this.props.markets.map(function (market, index) {
+                                return <option key={index} value={index}>{market.pair}</option>;
+                            })}
+                        </Input>
+                    </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Label for="quantity" sm={2}>Quantity</Label>
                     <Col sm={10}>
                         <InputGroup>
                             <Input value={loanTokenAmount} type="number" name="quantity" id="quantity"
-                               placeholder="0" onChange={this.handleLoanTokenAmountChange} />
-                           <InputGroupAddon addonType="prepend">
+                                   placeholder="0" onChange={this.handleLoanTokenAmountChange}/>
+                            <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
-                                    <strong>{ this.tokens[loanTokenAddress].symbol }</strong>
+                                    <strong>{this.lendroid.getTokenNames()[0]}</strong>
                                 </InputGroupText>
-                           </InputGroupAddon>
-                       </InputGroup>
+                            </InputGroupAddon>
+                        </InputGroup>
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="Cost" sm={2}>Cost (<i>per <strong>{this.tokens[loanTokenAddress].symbol}</strong></i>)</Label>
+                    <Label for="Cost" sm={2}>Cost
+                        (<i>per <strong>{this.lendroid.getTokenNames()[1]}</strong></i>)</Label>
                     <Col>
                         <InputGroup>
                             <Input value={loanCostTokenAmount} type="number" name="costAmount" id="costAmount"
-                               placeholder="0" step="0.01" onChange={this.handleCostAmountChange} />
+                                   placeholder="0" step="0.01" onChange={this.handleCostAmountChange}/>
                             <InputGroupAddon addonType="prepend">
-                                 <InputGroupText>
-                                     <strong>{this.tokens[loanCostTokenAddress].symbol}</strong>
-                                 </InputGroupText>
+                                <InputGroupText>
+                                    <strong>{this.lendroid.getTokenNames()[1]}</strong>
+                                </InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
                     </Col>
@@ -155,11 +122,11 @@ class CreateOffer extends Component {
                     <Col>
                         <InputGroup>
                             <Input value={totalCostAmount} type="number" name="totalCostAmount" id="totalCostAmount"
-                               placeholder="0" step="any" disabled />
+                                   placeholder="0" step="any" disabled/>
                             <InputGroupAddon addonType="prepend">
-                                 <InputGroupText>
-                                     <strong>{this.tokens[loanCostTokenAddress].symbol}</strong>
-                                 </InputGroupText>
+                                <InputGroupText>
+                                    <strong>{this.lendroid.getTokenNames()[1]}</strong>
+                                </InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
                     </Col>
@@ -168,12 +135,13 @@ class CreateOffer extends Component {
                     <Label for="Interest" sm={2}>Interest</Label>
                     <Col>
                         <InputGroup>
-                            <Input value={loanInterestTokenAmount} type="number" name="loandInterestAmount" id="loanInterestAmount"
-                               placeholder="0.01" step="0.01" disabled />
+                            <Input value={loanInterestTokenAmount} type="number" name="loandInterestAmount"
+                                   id="loanInterestAmount"
+                                   placeholder="0.01" step="0.01" disabled/>
                             <InputGroupAddon addonType="prepend">
-                                 <InputGroupText>
-                                     <strong>{this.tokens[loanInterestTokenAddress].symbol}</strong>
-                                 </InputGroupText>
+                                <InputGroupText>
+                                    <strong>{this.lendroid.getTokenNames()[1]}</strong>
+                                </InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
                     </Col>
@@ -194,4 +162,5 @@ function mapStateToProps(state) {
         tokens: state.tokens.tokens
     }
 }
+
 export default connect(mapStateToProps, null)(CreateOffer);
