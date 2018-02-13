@@ -19,6 +19,7 @@ class DepositFunds extends Component {
     handleApproval(e) {
         e.preventDefault();
         const target = e.target;
+     //   this.lendroid.getApproval('ETH')
     }
 
     handleSubmitDeposit = (e) => {
