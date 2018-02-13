@@ -135,14 +135,8 @@ class CreateOffer extends Component {
                     <Label for="Interest" sm={2}>Interest</Label>
                     <Col>
                         <InputGroup>
-<<<<<<< HEAD
                             <Input value={loanInterestTokenAmount} type="number" name="loandInterestAmount" id="loanInterestAmount"
                                placeholder="0.01" step="0.0000001" disabled />
-=======
-                            <Input value={loanInterestTokenAmount} type="number" name="loandInterestAmount"
-                                   id="loanInterestAmount"
-                                   placeholder="0.01" step="0.01" disabled/>
->>>>>>> master
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
                                     <strong>{this.lendroid.getTokenNames()[1]}</strong>
