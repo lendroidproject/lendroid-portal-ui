@@ -21,9 +21,11 @@ class CreateOffer extends Component {
             loanInterestTokenSymbol: 'ETH',
             loanInterestTokenAddress: this.lendroid.getTokenAddress('ETH'),
             loanInterestTokenAmount: 0,
+            wranglerAddress: '',
             totalCostAmount: 0
         }
 
+        this.handleWranglerAddressChange = this.handleWranglerAddressChange.bind(this);
         this.handleQuantityChange = this.handleLoanTokenAmountChange.bind(this);
         this.handleMarketChange = this.handleMarketChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,6 +33,12 @@ class CreateOffer extends Component {
 
     toBigNumber(tokenAmount) {
         return (new BigNumber(tokenAmount)).times('10e+18').toString(10);
+    }
+
+    handleWranglerAddressChange() {
+        const state = this.state;
+        state['wranglerAddress'] = event.target.value;
+        this.setState(state);
     }
 
     handleMarketChange = (event) => {
@@ -66,7 +74,8 @@ class CreateOffer extends Component {
         event.preventDefault();
 
         const {
-            loanTokenAmount, loanTokenSymbol, loanCostTokenSymbol, loanCostTokenAmount, loanInterestTokenAmount
+            loanTokenAmount, loanTokenSymbol, loanCostTokenSymbol, loanCostTokenAmount, loanInterestTokenAmount,
+            wranglerAddress
         } = this.state
 
         this.lendroid.createLoanOffer(loanTokenSymbol, this.toBigNumber(loanTokenAmount),
@@ -75,7 +84,7 @@ class CreateOffer extends Component {
     }
 
     render() {
-        const { loanTokenAmount, loanCostTokenAmount, loanInterestTokenAmount, totalCostAmount } = this.state;
+        const { loanTokenAmount, loanCostTokenAmount, loanInterestTokenAmount, totalCostAmount, wranglerAddress } = this.state;
         return (
             <Form className="offer-form" onSubmit={this.handleSubmit}>
                 <FormGroup row>
@@ -142,6 +151,16 @@ class CreateOffer extends Component {
                                     <strong>{this.lendroid.getTokenNames()[1]}</strong>
                                 </InputGroupText>
                             </InputGroupAddon>
+                        </InputGroup>
+                    </Col>
+                </FormGroup>
+                <FormGroup row>
+                    <Label for="Wrangler" sm={2}>Wrangler</Label>
+                    <Col>
+                        <InputGroup>
+                            <Input value={wranglerAddress} type="text" name="wranglerAddress" id="wranglerAddress"
+                               placeholder="0x0000000000000000000000000"
+                               onChange={this.handleWranglerAddressChange} />
                         </InputGroup>
                     </Col>
                 </FormGroup>
