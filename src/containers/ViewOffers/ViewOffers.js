@@ -13,10 +13,7 @@ class ViewOffers extends Component {
     componentDidMount() {
         const lendroid = new Lendroid('http://localhost:8080/offers?address=' + this.props.lenderAddress);
         lendroid.getLoanOffers()
-            .then(response => {
-                console.log(response);
-                this.setState({ offers: response });
-            })
+            .then(response => this.setState({ offers: response }))
             .catch(console.error);
     }
 
@@ -25,10 +22,10 @@ class ViewOffers extends Component {
         const offerNodes = offers.map(function (offer, index) {
             return (
                 <tr key={index}>
-                    <td>{offer.tokenPair}</td>
-                    <td>{offer.loanToken}</td>
-                    <td>{offer.loanQuantity}</td>
-                    <td>{offer.costAmount} {offer.costToken}</td>
+                    <td>{offer.market}</td>
+                    <td>{offer.loanTokenSymbol}</td>
+                    <td>{offer.loanTokenAmount}</td>
+                    <td>{offer.loanCostTokenAmount} {offer.loanCostTokenSymbol}</td>
                 </tr>
             );
         });

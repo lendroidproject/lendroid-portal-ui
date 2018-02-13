@@ -2,28 +2,19 @@ import React, { Component } from 'react';
 import { Row, Col, Table } from 'reactstrap'
 import { Form, Select, InputNumber, Button } from 'antd';
 import './DepositFunds.css';
-import { Lendroid } from 'lendroid'
-
-const availableTokens = [
-    {
-        tokenName: 'ETH',
-        amount: 10
-    },
-    {
-        tokenName: 'OMG',
-        amount: 1000
-    }
-];
 
 class DepositFunds extends Component {
 
+    constructor(props) {
+        super(props)
+        this.lendroid = this.props.lendroid
+    }
+
     handleSubmitDeposit = (e) => {
         e.preventDefault();
-
-        const lendroid = new Lendroid()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                lendroid.depositFunds(values.quantity, values.loanToken)
+                this.lendroid.depositFunds(values.quantity, values.loanToken)
             }
         });
     }
@@ -64,12 +55,11 @@ class DepositFunds extends Component {
                                         size="large"
                                     >
                                         {
-                                            availableTokens.map((token) => (
+                                            this.lendroid.getTokenNames().map(token => (
                                                 <Select.Option
-                                                    key={token.tokenName}
-                                                    value={token.tokenName}
-                                                >
-                                                    {token.tokenName}
+                                                    key={token}
+                                                    value={token}>
+                                                    {token}
                                                 </Select.Option>
                                             ))
                                         }
@@ -107,7 +97,7 @@ class DepositFunds extends Component {
                 </Col>
 
                 <Col md="12" className="available-tokens-table">
-                    <h4> Available Tokens </h4>
+                    <h4> Deposited Tokens </h4>
                     <Table>
                         <thead>
                         <tr>
@@ -116,17 +106,17 @@ class DepositFunds extends Component {
                             <th>Amount</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {
-                            availableTokens.map((token, index) => (
-                                <tr key={index}>
-                                    <td>{index}</td>
-                                    <td>{token.tokenName}</td>
-                                    <td>{token.amount}</td>
-                                </tr>
-                            ))
-                        }
-                        </tbody>
+                        {/*<tbody>*/}
+                        {/*{*/}
+                        {/*availableTokens.map((token, index) => (*/}
+                        {/*<tr key={index}>*/}
+                        {/*<td>{index}</td>*/}
+                        {/*<td>{token.tokenName}</td>*/}
+                        {/*<td>{token.amount}</td>*/}
+                        {/*</tr>*/}
+                        {/*))*/}
+                        {/*}*/}
+                        {/*</tbody>*/}
                     </Table>
                 </Col>
             </Row>

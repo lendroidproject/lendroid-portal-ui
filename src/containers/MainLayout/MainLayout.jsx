@@ -55,7 +55,7 @@ class MainLayout extends PureComponent {
                     0x0980248324...1321
                   </span>
                 </div>
-                <Icon 
+                <Icon
                   type="down"
                   className="menu-icon"
                 />
@@ -114,10 +114,10 @@ class MainLayout extends PureComponent {
             }}
           >
             <Switch>
-              <Route exact path="/view-offers" component={ViewOffers}/>
-              <Route exact path="/commit-funds" component={CommitFunds}/>
-              <Route exact path="/create-offer" component={CreateOffer}/>
-              <Route exact path="/deposit-funds" component={DepositFunds}/>
+              <Route exact path="/view-offers" render={ (routeProps)=> <ViewOffers {...routeProps} {...this.props}/> } />
+              <Route exact path="/commit-funds" render={ (routeProps)=> <CommitFunds {...routeProps} {...this.props}/> } />
+              <Route exact path="/create-offer" render={ (routeProps)=> <CreateOffer {...routeProps} {...this.props}/> } />
+              <Route exact path="/deposit-funds" render={ (routeProps)=> <DepositFunds {...routeProps} {...this.props}/> } />
               <Redirect to="/view-offers"/>
             </Switch>
           </Content>

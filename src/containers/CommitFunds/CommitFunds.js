@@ -2,35 +2,27 @@ import React, { Component } from 'react';
 import { Row, Col, Table } from 'reactstrap'
 import { Form, Select, InputNumber, Button } from 'antd';
 import './CommitFunds.css';
-import { Lendroid } from 'lendroid'
-
-const availableTokens = [
-    {
-        tokenName: 'ETH',
-        amount: 10
-    },
-    {
-        tokenName: 'OMG',
-        amount: 1000
-    }
-];
 
 class CommitFunds extends Component {
+
+    constructor(props) {
+        super(props);
+        this.lendroid = this.props.lendroid;
+    }
 
     handleSubmitCommit = (e) => {
         e.preventDefault();
 
-        const lendroid = new Lendroid()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const lendroid = new Lendroid()
-                lendroid.commitFunds(values.quantity, values.loanToken)
+                this.lendroid.commitFunds(values.quantity, values.loanToken)
             }
         });
     }
 
     render() {
         const { getFieldDecorator } = this.props.form;
+        const tokenSymbols = this.lendroid.getTokenNames()
 
         const formItemLayout = {
             labelCol: {
@@ -52,8 +44,7 @@ class CommitFunds extends Component {
                     <Form onSubmit={this.handleSubmitCommit} className="commit-form">
                         <Form.Item
                             {...formItemLayout}
-                            label="Commit Token"
-                        >
+                            label="Commit Token">
                             {
                                 getFieldDecorator('loanToken', {
                                     rules: [
@@ -62,15 +53,14 @@ class CommitFunds extends Component {
                                 })(
                                     <Select
                                         placeholder="Select a loan token"
-                                        size="large"
-                                    >
+                                        size="large">
                                         {
-                                            availableTokens.map((token) => (
+                                            tokenSymbols.map((token) => (
                                                 <Select.Option
-                                                    key={token.tokenName}
-                                                    value={token.tokenName}
+                                                    key={token}
+                                                    value={token}
                                                 >
-                                                    {token.tokenName}
+                                                    {token}
                                                 </Select.Option>
                                             ))
                                         }
@@ -108,22 +98,20 @@ class CommitFunds extends Component {
                 </Col>
 
                 <Col md="12" className="available-tokens-table">
-                    <h4> Deposited Tokens </h4>
+                    <h4> Committed Tokens </h4>
                     <Table>
                         <thead>
                         <tr>
-                            <th>No</th>
                             <th>Token Name</th>
                             <th>Amount</th>
                         </tr>
                         </thead>
                         <tbody>
                         {
-                            availableTokens.map((token, index) => (
-                                <tr key={index}>
-                                    <td>{index}</td>
-                                    <td>{token.tokenName}</td>
-                                    <td>{token.amount}</td>
+                            this.lendroid.getTokenNames().map(token=> (
+                                <tr key={token}>
+                                    <td>{token}</td>
+                                    <td>{token}</td>
                                 </tr>
                             ))
                         }
