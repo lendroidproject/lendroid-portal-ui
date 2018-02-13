@@ -27,12 +27,16 @@ const TOKENS = {
 const MARKETS = [
     {
       pair: 'OMG/ETH',
+      baseTokenSymbol: 'OMG',
       baseTokenAddress: '0x73de023fc01ab',
+      quoteTokenSymbol: 'ETH',
       quoteTokenAddress: '0x023e1abfc073d'
     },
     {
       pair: 'ZRX/ETH',
+      baseTokenSymbol: 'ZRX',
       baseTokenAddress: '0x048e1a2d7803a',
+      quoteTokenSymbol: 'ETH',
       quoteTokenAddress: '0x023e1abfc073d'
     }
 ]
