@@ -80,7 +80,7 @@ class CreateOffer extends Component {
 
         this.lendroid.createLoanOffer(loanTokenSymbol, this.toBigNumber(loanTokenAmount),
             this.toBigNumber(loanCostTokenAmount), loanCostTokenSymbol, this.toBigNumber(loanInterestTokenAmount),
-            this.wranglerAddress)
+            wranglerAddress)
             .catch(console.error);
     }
 
