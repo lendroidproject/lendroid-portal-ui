@@ -13,7 +13,9 @@ class ViewOffers extends Component {
     componentDidMount() {
         const lendroid = new Lendroid('http://localhost:8080/offers?address=' + this.props.lenderAddress);
         lendroid.getLoanOffers()
-            .then(response => this.setState({ offers: response }))
+            .then(response => {
+                this.setState({ offers: response.offers })
+            })
             .catch(console.error);
     }
 

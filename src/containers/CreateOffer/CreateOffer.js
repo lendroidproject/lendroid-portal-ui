@@ -21,12 +21,24 @@ class CreateOffer extends Component {
             loanInterestTokenSymbol: 'ETH',
             loanInterestTokenAddress: this.lendroid.getTokenAddress('ETH'),
             loanInterestTokenAmount: 0,
+            wranglerAddress: '',
             totalCostAmount: 0
         }
 
+        this.handleWranglerAddressChange = this.handleWranglerAddressChange.bind(this);
         this.handleQuantityChange = this.handleLoanTokenAmountChange.bind(this);
         this.handleMarketChange = this.handleMarketChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    toBigNumber(tokenAmount) {
+        return (new BigNumber(tokenAmount)).times('10e+18').toString(10);
+    }
+
+    handleWranglerAddressChange(event) {
+        const state = this.state;
+        state['wranglerAddress'] = event.target.value;
+        this.setState(state);
     }
 
     handleMarketChange = (event) => {
@@ -61,15 +73,19 @@ class CreateOffer extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const { loanTokenAmount, loanTokenSymbol, loanCostTokenSymbol, loanCostTokenAmount, loanInterestTokenAmount } = this.state
+        const {
+            loanTokenAmount, loanTokenSymbol, loanCostTokenSymbol, loanCostTokenAmount, loanInterestTokenAmount,
+            wranglerAddress
+        } = this.state
 
-        this.lendroid.createLoanOffer(loanTokenSymbol, loanTokenAmount,
-            loanCostTokenAmount, loanCostTokenSymbol, loanInterestTokenAmount)
+        this.lendroid.createLoanOffer(loanTokenSymbol, this.toBigNumber(loanTokenAmount),
+            this.toBigNumber(loanCostTokenAmount), loanCostTokenSymbol, this.toBigNumber(loanInterestTokenAmount),
+            wranglerAddress)
             .catch(console.error);
     }
 
     render() {
-        const { loanTokenAmount, loanCostTokenAmount, loanInterestTokenAmount, totalCostAmount } = this.state;
+        const { loanTokenAmount, loanCostTokenAmount, loanInterestTokenAmount, totalCostAmount, wranglerAddress } = this.state;
         return (
             <Form className="offer-form" onSubmit={this.handleSubmit}>
                 <FormGroup row>
@@ -136,6 +152,16 @@ class CreateOffer extends Component {
                                     <strong>{this.lendroid.getTokenNames()[1]}</strong>
                                 </InputGroupText>
                             </InputGroupAddon>
+                        </InputGroup>
+                    </Col>
+                </FormGroup>
+                <FormGroup row>
+                    <Label for="Wrangler" sm={2}>Wrangler</Label>
+                    <Col>
+                        <InputGroup>
+                            <Input value={wranglerAddress} type="text" name="wranglerAddress" id="wranglerAddress"
+                               placeholder="0x0000000000000000000000000"
+                               onChange={this.handleWranglerAddressChange} />
                         </InputGroup>
                     </Col>
                 </FormGroup>
