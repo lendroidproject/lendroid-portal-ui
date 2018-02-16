@@ -2,47 +2,49 @@ import React, { Component } from 'react';
 import { Row, Col, Table } from 'reactstrap'
 import { Form, Select, InputNumber, Button } from 'antd';
 import './DepositFunds.css';
+import { TokenSymbol } from 'lendroid/dist/constants/tokens'
 
 class DepositFunds extends Component {
 
     constructor(props) {
-        super(props)
-        this.lendroid = this.props.lendroid
+        super(props);
+        this.lendroid = this.props.lendroid;
         this.state = {
             ethBalance: 0,
             omgBalance: 0,
-            withdrawablEthBalance: 0,
-            withdrawablOmgBalance: 0
+            withdrawableEthBalance: 0,
+            withdrawableOmgBalance: 0
         }
     }
 
-    handleApproval(e) {
+    handleApproval = (e) => {
         e.preventDefault();
-        const target = e.target;
-     //   this.lendroid.getApproval('ETH')
+        this.lendroid.approveWalletForTransfer(this.lendroid.getTokenAddress('WETH'))
+        this.lendroid.approveWalletForTransfer(this.lendroid.getTokenAddress('OMG'))
     }
 
     handleSubmitDeposit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
+            console.log(values.quantity, values.loanToken)
             if (!err) {
                 this.lendroid.depositFunds(values.quantity, values.loanToken)
             }
         });
     }
 
-    componentWillMount() {
+    componentWillMount = () => {
         const state = this.state
 
-        this.lendroid.getWithdrawableBalance(this.lendroid.getTokenAddress('ETH'))
+        this.lendroid.getWithdrawableBalance(this.lendroid.getTokenAddress('WETH'))
             .then(balance => {
-                state.withdrawablEthBalance = balance
+                state.withdrawableEthBalance = balance
                 this.setState(state)
             }).catch(console.error)
 
         this.lendroid.getWithdrawableBalance(this.lendroid.getTokenAddress('OMG'))
             .then(balance => {
-                state.withdrawablOmgBalance = balance
+                state.withdrawableOmgBalance = balance
                 this.setState(state)
             }).catch(console.error)
     }
@@ -65,6 +67,7 @@ class DepositFunds extends Component {
         return (
             <Row className="deposit-funds">
                 <Col md="12">
+                    <h4>Approve use of funds</h4>
                     <Table>
                         <thead>
                         <tr>
@@ -74,21 +77,23 @@ class DepositFunds extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr key={'ETH'}>
-                            <td><strong>ETH</strong></td>
+                        <tr key={'WETH'}>
+                            <td><strong>WETH</strong></td>
                             <td>{this.state.ethBalance}</td>
-                            <td><Button type="primary" htmlType="submit" onClick={ this.handleApproval }>Approve</Button></td>
+                            <td><Button type="primary" htmlType="submit" onClick={this.handleApproval}>Approve</Button>
+                            </td>
                         </tr>
                         <tr key={'OMG'}>
                             <td><strong>OMG</strong></td>
                             <td>{this.state.omgBalance}</td>
-                            <td><Button type="primary" htmlType="submit" onClick={ this.handleApproval }>Approve</Button></td>
+                            <td><Button type="primary" htmlType="submit" onClick={this.handleApproval}>Approve</Button>
+                            </td>
                         </tr>
                         </tbody>
                     </Table>
                 </Col>
                 <Col md="12" className="loan-submit-form">
-                    <h4>Submit your loan</h4>
+                    <h4>Deposit funds</h4>
                     <Form onSubmit={this.handleSubmitDeposit} className="deposit-form">
                         <Form.Item
                             {...formItemLayout}
@@ -97,11 +102,11 @@ class DepositFunds extends Component {
                             {
                                 getFieldDecorator('loanToken', {
                                     rules: [
-                                        { required: true, message: 'Please select a loan token to deposit' }
+                                        { required: true, message: 'Please select a token to deposit' }
                                     ]
                                 })(
                                     <Select
-                                        placeholder="Select a loan token"
+                                        placeholder="Select a token"
                                         size="large"
                                     >
                                         {
@@ -156,13 +161,13 @@ class DepositFunds extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr key={'ETH'}>
-                            <td><strong>ETH</strong></td>
-                            <td>{this.state.withdrawablEthBalance}</td>
+                        <tr key={'WETH'}>
+                            <td><strong>WETH</strong></td>
+                            <td>{this.state.withdrawableEthBalance}</td>
                         </tr>
                         <tr key={'OMG'}>
                             <td><strong>OMG</strong></td>
-                            <td>{this.state.withdrawablOmgBalance}</td>
+                            <td>{this.state.withdrawableOmgBalance}</td>
                         </tr>
                         </tbody>
                     </Table>

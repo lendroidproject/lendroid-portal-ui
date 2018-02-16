@@ -27,7 +27,7 @@ class CommitFunds extends Component {
     componentWillMount() {
         const state = this.state
 
-        this.lendroid.getCashBalance(this.lendroid.getTokenAddress('ETH'))
+        this.lendroid.getCashBalance(this.lendroid.getTokenAddress('WETH'))
             .then(balance => {
                 state.ethBalance = balance
                 this.setState(state)
@@ -125,8 +125,8 @@ class CommitFunds extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr key={'ETH'}>
-                            <td>ETH</td>
+                        <tr key={'WETH'}>
+                            <td>WETH</td>
                             <td>{this.state.ethBalance}</td>
                         </tr>
                         <tr key={'OMG'}>
