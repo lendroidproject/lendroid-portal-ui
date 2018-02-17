@@ -11,8 +11,8 @@ class ViewOffers extends Component {
     }
 
     componentDidMount() {
-        const hostServer = window.location.origin
-        const lendroid = new Lendroid(hostServer+'/offers?address=' + this.props.lenderAddress);
+        const hostServer = window.location.port == '3000' ? 'http://localhost:8080/offers' : window.location.origin+'/offers';
+        const lendroid = new Lendroid({apiEndpoint: hostServer});
         lendroid.getLoanOffers()
             .then(response =>  {
                 console.log(response)
