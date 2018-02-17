@@ -6,7 +6,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import * as lendroid from 'lendroid'
 
-const len = new lendroid.Lendroid({ deployedConstants: { walletAddress: '0x04Ad601827AabD2259a6F5Ed67978401aEDF3cBE' } })
+const hostServer = window.location.port == '3000' ? 'http://localhost:8080/offers' : window.location.origin+'/offers';
+const len = new lendroid.Lendroid({ apiEndpoint: hostServer, deployedConstants: { walletAddress: '0x04Ad601827AabD2259a6F5Ed67978401aEDF3cBE' } })
 
 ReactDOM.render(
     <App lendroid={len}/>,
