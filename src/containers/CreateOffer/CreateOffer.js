@@ -11,15 +11,15 @@ class CreateOffer extends Component {
         this.lendroid = this.props.lendroid;
 
         this.state = {
-            tokenPair: 'OMG/ETH',
+            tokenPair: 'OMG/WETH',
             loanTokenSymbol: 'OMG',
             loanTokenAddress: this.lendroid.getTokenAddress('OMG'),
             loanTokenAmount: 1,
-            loanCostTokenSymbol: 'ETH',
-            loanCostTokenAddress: this.lendroid.getTokenAddress('ETH'),
+            loanCostTokenSymbol: 'WETH',
+            loanCostTokenAddress: this.lendroid.getTokenAddress('WETH'),
             loanCostTokenAmount: 1,
-            loanInterestTokenSymbol: 'ETH',
-            loanInterestTokenAddress: this.lendroid.getTokenAddress('ETH'),
+            loanInterestTokenSymbol: 'WETH',
+            loanInterestTokenAddress: this.lendroid.getTokenAddress('WETH'),
             loanInterestTokenAmount: 0,
             wranglerAddress: '',
             totalCostAmount: 0

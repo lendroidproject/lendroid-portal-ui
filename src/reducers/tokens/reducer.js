@@ -4,7 +4,7 @@ import Immutable from 'seamless-immutable'
 const initialState = Immutable({
     tokens: {
         '0x73de023fc01ab': 'OMG',
-        '0x023e1abfc073d': 'ETH',
+        '0x023e1abfc073d': 'WETH',
         '0x048e1a2d7803a': 'ZRX',
     }
 })

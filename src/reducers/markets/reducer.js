@@ -4,12 +4,12 @@ import Immutable from 'seamless-immutable'
 
 const initialState = Immutable({
     markets: [{
-        pair: 'OMG/ETH',
+        pair: 'OMG/WETH',
         baseTokenAddress: '0x73de023fc01ab',
         quoteTokenAddress: '0x023e1abfc073d'
       },
       {
-        pair: 'ZRX/ETH',
+        pair: 'ZRX/WETH',
         baseTokenAddress: '0x048e1a2d7803a',
         quoteTokenAddress: '0x023e1abfc073d'
       }]
